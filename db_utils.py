@@ -3,7 +3,7 @@
 import yaml
 import pandas as pd
 from sqlalchemy import create_engine
-
+#%%
 # function which loads the credentials.yaml file and returns the data dictionary contained within. 
 # This will be be passed to your RDSDatabaseConnector as an argument which the class will use to connect to the remote database
 def load_credentials():
@@ -47,7 +47,28 @@ extracted_df = connector.extract_loans()
 save_data_to_csv(extracted_df)
 
 # %%
-#testing to see if data looks ok
-df = pd.read_csv('loan_payments.csv')
+#load extracted data into a pandas df
+def create_loans_dataframe():
+    return pd.read_csv('loan_payments.csv')
+
+df = create_loans_dataframe()
 df.head()
+# %%
+df.describe()
+# %%
+df.info()
+#%%
+for i in df.columns:
+    print(i,df[i].isnull().sum()/len(df)*100)
+
+# %%
+df.head()
+#%%
+# Class to convert columns to the correct format
+class DataTransform:
+    def __init__(self) -> None:
+        pass
+
+    #convert string to date
+df['next_payment_date']= pd.to_datetime(df['next_payment_date'])
 # %%
