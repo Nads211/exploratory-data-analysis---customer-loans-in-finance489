@@ -51,24 +51,3 @@ save_data_to_csv(extracted_df)
 def create_loans_dataframe():
     return pd.read_csv('loan_payments.csv')
 
-df = create_loans_dataframe()
-df.head()
-# %%
-df.describe()
-# %%
-df.info()
-#%%
-for i in df.columns:
-    print(i,df[i].isnull().sum()/len(df)*100)
-
-# %%
-df.head()
-#%%
-# Class to convert columns to the correct format
-class DataTransform:
-    def __init__(self) -> None:
-        pass
-
-    #convert string to date
-df['next_payment_date']= pd.to_datetime(df['next_payment_date'])
-# %%
