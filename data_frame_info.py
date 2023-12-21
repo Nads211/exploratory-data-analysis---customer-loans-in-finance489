@@ -6,35 +6,78 @@
 
 #Describe all columns in the DataFrame to check their data types
 #Extract statistical values: median, standard deviation and mean from the columns and the DataFrame
-#Count distinct values in categorical columns
-#Print out the shape of the DataFrame
-#Generate a count/percentage count of NULL values in each column
+
+
+
 #Any other methods you may find useful
 
 
 #%%
+import pandas as pd
+
 class DataFrameInfo:
-    def __init__(self) -> None:
-        pass
+    """    
+    def check_dtypes(self, dataframe):
+
+    shape(self, dataframe, print = None):
+
+    column_list(self, dataframe, print = None)
+
+    def column_info_dataframe(self, dataframe, column = None):
+    
+    filter_column_info_dataframe(self, dataframe, column_to_filter, vaules_to_filter: list)
+
+    def get_null_percentage(self, dataframe)
+    
+    column_list(self, dataframe)
+    
+    """
+
 
     #Describe all columns in the DataFrame to check their data types
-def check_dtypes():
-    return df.info()
-    
-def shape(dataframe):
-    print(f'The DataFrame has {dataframe.shape[1]} columns and {dataframe.shape[0]} rows.')
-    return dataframe.shape
-    
-def column_info_df(df, column = None):
-    #function that returns list of distinct values, the count and datatype of selected column. 
-    # if no column is specified returns a dataframe of all colum information
-    col_list = df.columns.to_list()
-    list = [(x, df[x].unique(), len(df[x].unique()), df[x].dtype, df[x].isna().sum()) for x in col_list]
-    list_df = pd.DataFrame(list, columns = ['Column Name', 'Distinct Values', 'Count of Distinct Values', 'Data Type', 'Count of Null Values'], index = col_list)
-    if column == None:
-        return list_df    
-    else:
-        return list_df.loc[column]
+    def check_dtypes(self, dataframe):
+        return dataframe.info()
 
+    #Print out the shape of the DataFrame    
+    def shape(self, dataframe, print = None):
+        if print == None:
+            return dataframe.shape
+        else:
+            print(f'The DataFrame has {dataframe.shape[1]} columns and {dataframe.shape[0]} rows.')
+    
+    #get column list
+    def column_list(self, dataframe, print = None):
+        col_list = dataframe.columns.to_list()
+        if print == None:
+            return col_list
+        else:
+            print(f'The DataFrame has column names: {col_list}.')
+        
 
-# %%
+    #Count distinct values in categorical columns    
+    def column_info_dataframe(self, dataframe, column = None):
+        #function that returns list of distinct values, the count and datatype of selected column. 
+        # if no column is specified returns a dataframe of all colum information
+        col_list = dataframe.columns.to_list()
+        list = [(x, dataframe[x].unique(), len(dataframe[x].unique()), dataframe[x].dtype, dataframe[x].isna().sum()) for x in col_list]
+        list_dataframe = pd.DataFrame(list, columns = ['Column Name', 'Distinct Values', 'Distinct Values Count', 'Data Type', 'Null Values Count'], index = col_list)
+        if column == None:
+            return list_dataframe    
+        else:
+            return list_dataframe.loc[column]
+    
+    #filter the above info dataframe
+    def filter_column_info_dataframe(self, dataframe, column_to_filter, vaules_to_filter: list):
+        column_info = self.column_info_dataframe(dataframe, column = None)
+        filtered_df = column_info.loc[column_info[column_to_filter].isin(vaules_to_filter)]
+        return filtered_df
+
+    #Generate a count/percentage count of NULL values in each column
+    def get_null_percentage(self, dataframe): #takes a dataframe and outputs a dataframe of column names and their percentage of null values
+        null_percentage_dict = {}
+        for col in dataframe.columns:
+            percentage = dataframe[col].isnull().sum()/len(dataframe)*100
+            null_percentage_dict[col] = round(percentage, 2) #for each key=col, value=rounded percentage
+        null_percentage_dict = sorted(null_percentage_dict.items(), key=lambda x:x[1], reverse=True) # sort with highest %. But returns a list of tuples
+        return pd.DataFrame(null_percentage_dict, columns=['Column Name', 'Null Values %']) #display as dataframe for neatness
+    # %%
