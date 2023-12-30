@@ -1,5 +1,5 @@
 credentials.yaml
 testing.py
 explore_data.ipynb
-loan_payments.csv
 loans_dataset_schema.yaml
+__pycache__

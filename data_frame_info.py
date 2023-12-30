@@ -81,3 +81,22 @@ class DataFrameInfo:
         null_percentage_dict = sorted(null_percentage_dict.items(), key=lambda x:x[1], reverse=True) # sort with highest %. But returns a list of tuples
         return pd.DataFrame(null_percentage_dict, columns=['Column Name', 'Null Values %']) #display as dataframe for neatness
     # %%
+    def numeric_columns(self, dataframe):
+        numeric_cols = []
+        for col in dataframe.columns:
+            #print(df[col].dtype)
+            if dataframe[col].dtype in ['int', 'int32', 'int64', 'float', 'float32', 'float64']:
+            #    print(col)
+                numeric_cols.append(col)
+        return numeric_cols
+    
+    def get_skewed_columns(self, dataframe, col_list, threshold):
+        skewed_cols = {}
+        for col in col_list:
+            skew = dataframe[col].skew()
+            if abs(skew) > threshold:
+                skewed_cols[col] = round(skew, 2)
+        return skewed_cols
+    
+
+ 
