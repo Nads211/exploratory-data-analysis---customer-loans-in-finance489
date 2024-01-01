@@ -40,3 +40,8 @@
 - **mths_since_last_major_derog**: Months since most recent 90-day or worse rating
 - **policy_code**: publicly available policy_code=1 new products not publicly available policy_code=2
 - **application_type**: Indicates whether the loan is an individual application or a joint application with two co-borrowers
+
+----
+- ?? mths_since_last_delinq
+- **total_payment_inv**: total_payment_inv are the total payments which have been funded by the investor
+- **total_rec_prncp**: the total that has been paid so far from the monthly installments ( it does not include the interest which is added into the installments) if that make sense, so it is how much has been paid without the profit
